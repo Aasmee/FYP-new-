@@ -1,0 +1,105 @@
+﻿id,name,imageUrl,description
+1,Spaghetti Bolognese,https://umamiology.com/wp-content/uploads/2024/04/Umamiology-Spaghetti-Bolognese-RecipeCard16.jpg,A classic Italian pasta dish with rich tomato sauce.
+2,Bossam,https://koreancuisinerecipes.com/wp-content/uploads/2020/08/bossam-scaled.jpg,"Korean boiled pork wraps with garlic, kimchi, and dipping sauce."
+3,Tonkatsu,https://static01.nyt.com/images/2024/02/28/multimedia/ND-tonkatsu-hbtg/ND-tonkatsu-hbtg-mediumSquareAt3X.jpg,Japanese deep-fried pork cutlet with crispy breading.
+4,Taco,https://www.thecookierookie.com/wp-content/uploads/2024/05/street-tacos-recipe-2.jpg,"Mexican tortilla filled with seasoned meat, vegetables, and sauce."
+5,Gimbap,https://www.beyondkimchee.com/wp-content/uploads/2023/11/kimbap-seaweed-rice-rolls-thumbnail.jpg,"Korean rice rolls with seaweed, vegetables, and protein."
+6,Gyoza,"https://assets.epicurious.com/photos/628ba0d3fa016bab2139efa2/1:1/w_1920,c_limit/Gyoza_RECIPE_051922_34332.jpg","Japanese dumplings filled with pork and vegetables, pan-fried to perfection."
+7,Cheesecake,https://www.savorynothings.com/wp-content/uploads/2024/12/Classic-Cheesecake-Recipe-Image-SQ.jpg,Rich and creamy dessert with a buttery graham cracker crust.
+8,Chow Mein,https://thebigmansworld.com/wp-content/uploads/2023/02/chicken-chow-mein-recipe.jpg,Chinese stir-fried noodles with vegetables and protein.
+9,Cuban Sandwich,https://lizzylovesfood.com/wp-content/uploads/2024/05/Cuban-Sandwiches-in-Tampa-1200x1200-1.jpg,"A crispy pressed sandwich with roast pork, ham, cheese, and pickles."
+10,Egg Tart,https://assets.bonappetit.com/photos/59b807037f7c9a1ef926e5f6/1:1/w_2560%2Cc_limit/portuguese-egg-custard-tarts.jpg,A sweet and creamy custard-filled pastry.
+11,Bibimbap,https://carlsbadcravings.com/wp-content/uploads/2023/09/Bibimbap-9.jpg,"Korean rice bowl with assorted vegetables, egg, and spicy sauce."
+12,Brownie,https://www.recipetineats.com/tachyon/2020/03/Brownies_0-SQ.jpg,A rich and fudgy chocolate dessert.
+13,Tiramisu,https://butternutbakeryblog.com/wp-content/uploads/2024/05/classic-tiramisu.jpg,Classic Italian coffee-flavored dessert with mascarpone cheese.
+14,Panna Cotta,https://www.liveeatlearn.com/wp-content/uploads/2024/11/vegan-panna-cotta-5.jpg,A creamy Italian dessert served with fruit sauce.
+15,Shepherd's Pie,https://easydinnerideas.com/wp-content/uploads/2020/06/Easy-Shepherds-Pie.jpg,A savory pie with a minced meat base and mashed potato topping.
+16,Shakshuka,https://www.eatloveeats.com/wp-content/uploads/2018/03/Shakshuka-with-Feta-and-Chorizo-Featured.jpg,A Middle Eastern dish with poached eggs in a rich tomato sauce.
+17,Jambalaya,https://kolbykash.com/wp-content/uploads/2023/07/Jambalaya-Finished--scaled.jpg,"A spicy Creole rice dish with chicken, sausage, and shrimp."
+18,Pad Thai,https://twokooksinthekitchen.com/wp-content/uploads/2021/02/pad-thai.jpg,"A classic Thai stir-fried noodle dish with shrimp, tofu, and peanuts."
+19,Butter Chicken,https://www.mysavoryadventures.com/wp-content/uploads/2023/04/restaurant-style-butter-chicken.jpg,A rich and creamy Indian curry made with marinated chicken and a tomato-based sauce.
+20,Sushi Roll,https://japan.recipetineats.com/wp-content/uploads/2019/07/Take-away-sushi-rolls_3781NM.jpg,Japanese rice roll wrapped in seaweed and filled with seafood and vegetables.
+21,Ramen,https://www.craftycookbook.com/wp-content/uploads/2023/04/tonkotsu.jpg,"A Japanese noodle soup with broth, meat, and vegetables."
+22,Lasagna,https://www.tasteofhome.com/wp-content/uploads/2024/10/Pepperoni-Lasagna_EXPS_TOHD24_12012_DianaRattray_6.jpg,A classic Italian layered pasta dish with meat sauce and cheese.
+23,Paella,https://silveroak.com/wp-content/uploads/2020/02/Recipe-Seafood-Paella.jpg,"A Spanish rice dish with seafood, chicken, and saffron."
+24,Falafel,https://www.indianhealthyrecipes.com/wp-content/uploads/2022/01/falafel-recipe.jpg,Middle Eastern deep-fried chickpea balls served in pita.
+25,Pho,https://www.recipetineats.com/tachyon/2019/04/Beef-Pho_6.jpg,"Vietnamese noodle soup with beef, herbs, and broth."
+26,Biryani,https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Chicken-Biryani-Recipe.jpg,A spiced Indian rice dish with meat and vegetables.
+27,Moussaka,https://www.onceuponachef.com/images/2024/12/Moussaka-32-scaled.jpg,"A Greek dish with layered eggplant, meat, and bÃ©chamel sauce."
+28,Poutine,https://images.ctfassets.net/0dkgxhks0leg/2yeqWukA2traRMH2S3xIYS/909fa789452349e328dcd255d6773586/loaded_20poutine_20fries_046.jpg,Canadian fries topped with cheese curds and gravy.
+29,Goulash,https://apinchofsaffron.nl/wp-content/uploads/2021/01/22A6488.jpg,"A Hungarian stew made with beef, paprika, and vegetables."
+30,Churros,https://thescranline.com/wp-content/uploads/2023/09/CHURROS-S-01.jpg,Spanish fried dough pastries served with chocolate sauce.
+31,Spicy Szechuan Noodles,https://lindseyeatsla.com/wp-content/uploads/2022/02/Lindsey_Eats_Sichuan_Spicy_Noodles-4-819x1024.jpg,Chinese noodles with spicy Szechuan pepper sauce.
+32,Buffalo Wings,https://www.loveandotherspices.com/wp-content/uploads/2022/02/air-fryer-buffalo-chicken-wings-featured.jpg,Crispy chicken wings tossed in spicy buffalo sauce.
+33,Kimchi Jjigae,https://www.cookerru.com/wp-content/uploads/2021/05/kimchi-stew-recipe-card.jpg,"Korean spicy stew with kimchi, tofu, and pork."
+34,JalapeÃ±o Poppers,https://therecipecritic.com/wp-content/uploads/2019/11/jalapeno_poppers_hero.jpg,Fried jalapeÃ±os stuffed with cheese.
+35,Vindaloo Curry,https://www.indianhealthyrecipes.com/wp-content/uploads/2022/11/lamb-vindaloo-recipe.jpg,Spicy Indian curry with meat and potatoes.
+36,Caprese Salad,https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/07/Caprese-Salad-2-2.jpg,"Italian salad with fresh mozzarella, tomatoes, and basil."
+37,Miso Soup,https://www.justonecookbook.com/wp-content/uploads/2022/06/Miso-Soup-8297-I.jpg,"Japanese soup with tofu, seaweed, and miso paste."
+38,Chicken Alfredo,https://sugarspunrun.com/wp-content/uploads/2024/02/Chicken-alfredo-recipe-1-of-1.jpg,Creamy pasta with chicken and parmesan.
+39,Greek Gyro,https://laurenslatest.com/wp-content/uploads/2023/06/homemade-gyros-31.jpg,"Pita filled with grilled meat, tomatoes, and tzatziki."
+40,Tom Yum Soup,https://www.aspicyperspective.com/wp-content/uploads/2019/08/tom-yum-soup-13.jpg,Thai spicy and sour shrimp soup.
+41,Minestrone,https://www.savingdessert.com/wp-content/uploads/2016/01/Minestrone-Soup-5-2.jpg,Italian vegetable soup with pasta.
+42,French Onion Soup,https://www.africanbites.com/wp-content/uploads/2019/01/IMG_3868.jpg,Savory soup topped with melted cheese and bread.
+43,Gazpacho,https://www.cookedandloved.com/wp-content/uploads/2012/09/paleo-Gazpacho-900.jpg,Chilled Spanish tomato soup.
+44,Lentil Soup,https://playswellwithbutter.com/wp-content/uploads/2020/12/Damn-Good-Lentil-Soup-15.jpg,"Comforting soup with lentils, carrots, and celery."
+45,Crème Brûlée,https://veronikaskitchen.com/wp-content/uploads/2021/11/Creme-Brulee-1899.jpg,French dessert with caramelized sugar topping.
+46,Mochi Ice Cream,https://kirbiecravings.com/wp-content/uploads/2016/09/mochi-ice-cream-033.jpg,Japanese sweet rice cake filled with ice cream.
+47,Pavlova,https://hillstreetgrocer.com/application/files/4815/3948/1945/aussie_pavlova.jpg,Crispy meringue topped with whipped cream and fruit.
+48,Banoffee Pie,https://www.thecookingcollective.com.au/wp-content/uploads/2024/11/banoffee-pie-5-of-18.jpg,Banana and toffee dessert with whipped cream.
+49,Baklava,https://veenaazmanov.com/wp-content/uploads/2018/05/Pistachio-Baklava.jpg,Middle Eastern dessert with honey and nuts.
+50,Grilled Cheese Sandwich,https://cdn.loveandlemons.com/wp-content/uploads/opengraph/2023/01/grilled-cheese-sandwich.jpg,Crispy bread with melted cheese filling.
+51,Avocado Toast,https://alegumeaday.com/wp-content/uploads/2024/03/Bean-avocado-toast-3.jpg,Toasted bread topped with mashed avocado.
+52,Cucumber Salad,https://cdn.loveandlemons.com/wp-content/uploads/2023/05/cucumber-salad.jpg,Refreshing salad with cucumbers and vinegar dressing.
+53,Scrambled Eggs,https://www.livingonadime.com/wp-content/uploads/easy-scrambled-eggs-recipe-tr.jpg,Soft and fluffy eggs cooked in butter.
+54,Fruit Smoothie,https://lilluna.com/wp-content/uploads/2022/10/fruit-smoothie-resize-14.jpg,Blended drink with mixed fruits and yogurt.
+55,Beef Wellington,https://www.howtocook.recipes/wp-content/uploads/2021/05/Beef-wellington-recipe-500x500.jpg,Tender beef wrapped in puff pastry.
+56,Coq au Vin,https://static01.nyt.com/images/2023/08/24/multimedia/MC-Coq-Au-Van-ctpm/MC-Coq-Au-Van-ctpm-mediumSquareAt3X.jpg,French braised chicken with wine sauce.
+57,Peking Duck,https://redhousespice.com/wp-content/uploads/2022/01/sliced-peking-duck-with-pancakes-scaled.jpg,Chinese roasted duck with crispy skin.
+58,Ratatouille,https://tatyanaseverydayfood.com/wp-content/uploads/2018/08/Creamy-Smoky-Ratatouille-2.jpg,French stewed vegetable dish.
+59,Osso Buco,https://cookingwithwineblog.com/wp-content/uploads/2024/06/Braised-Veal-Shanks-Ossobuco-Featured-1.jpg,Italian braised veal shanks with vegetables.
+60,Pancakes,https://www.tasteandtellblog.com/wp-content/uploads/2020/03/The-Best-Pancake-Recipe-3.jpg,Fluffy breakfast pancakes served with syrup.
+61,French Toast,https://preppykitchen.com/wp-content/uploads/2023/09/French-Toast-R-Blog-2.jpg,Bread soaked in egg mixture and fried.
+62,Oatmeal,https://www.veggiesdontbite.com/wp-content/uploads/2020/04/vegan-oatmeal-recipe-FI.jpg,Hearty oats cooked with milk and sweeteners.
+63,Breakfast Burrito,https://peasandcrayons.com/wp-content/uploads/2020/03/bacon-breakfast-burrito-recipe--800x1200.jpg,"Tortilla filled with eggs, cheese, and meat."
+64,Eggs Benedict,https://www.jocooks.com/wp-content/uploads/2020/08/eggs-benedict-1-13.jpg,Poached eggs with hollandaise sauce on an English muffin.
+65,Shahi Paneer,https://shwetainthekitchen.com/wp-content/uploads/2024/04/shahi-paneer.jpg,Rich Indian cottage cheese curry in a creamy tomato and cashew gravy.
+66,Fish Tacos,https://tonisrecipes.com/wp-content/uploads/2024/06/Baja-Fish-Tacos-Recipe.jpg,Crispy battered fish with fresh slaw and zesty sauce in soft tortillas.
+67,Pierogi,https://bittmanproject.com/wp-content/uploads/GettyImages-1299000692-pierogi.jpg,"Polish dumplings filled with potatoes, cheese, or meat."
+68,Okonomiyaki,https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Okonomiyaki_001.jpg/960px-Okonomiyaki_001.jpg,"Japanese savory pancake with cabbage, meat, and special sauce."
+69,Ceviche,https://www.feastingathome.com/wp-content/uploads/2015/04/Ceviche-Recipe.jpg,Latin American seafood dish cured in citrus juice.
+70,Khachapuri,https://www.kingarthurbaking.com/sites/default/files/2021-02/khachapuri.jpg,Georgian bread filled with cheese and egg.
+71,Chili con Carne,https://images.services.kitchenstories.io/FtUUbPmk1FZjTR40hKwRhP4U3Bs=/3840x0/filters:quality(85)/images.kitchenstories.io/wagtailOriginalImages/R260_final_photo_2.jpg,"Spicy stew with ground beef, beans, and tomatoes."
+72,Doro Wat,https://www.chilipeppermadness.com/wp-content/uploads/2023/08/Doro-Wat-Recipe-SQ.jpg,Ethiopian chicken stew spiced with berbere and served with injera.
+73,Laksa,https://www.elmundoeats.com/wp-content/uploads/2024/03/Penang-asam-laksa-in-a-bowl.jpg,Spicy Malaysian noodle soup with coconut milk and seafood.
+74,Katsu Sando,https://www.jocooks.com/wp-content/uploads/2024/05/katsu-sando-1-3.jpg,Japanese sandwich with breaded pork cutlet and sauce.
+75,Bánh Mì,http://savorysweetspoon.com/wp-content/uploads/2023/11/Banh-Mi-Thit-Nuong-1x1-1.jpg,"Vietnamese sandwich with pickled veggies, meat, and fresh herbs."
+76,Stuffed Bell Peppers,https://www.aheadofthyme.com/wp-content/uploads/2018/07/vegan-stuffed-peppers.jpg,"Bell peppers filled with rice, meat, and tomato sauce."
+77,Arancini,https://howtofeedaloon.com/wp-content/uploads/2017/08/rice-balls-3-2.jpg,Italian fried rice balls with cheese and meat filling.
+78,Arepas,https://healthiersteps.com/wp-content/uploads/2018/12/how-to-make-arepas-easy.jpg,"Venezuelan cornmeal cakes filled with meat, cheese, or beans."
+79,Tamales,https://keviniscooking.com/wp-content/uploads/2023/08/Pork-Tamales-Rojos-sauce.jpg,Mexican dish of masa dough filled with meat and steamed in a corn husk.
+80,Pão de Queijo,https://essareceitafunciona.com.br/wp-content/uploads/2022/07/Pao-de-queijo-Essa-Receita-Funciona-9.jpg,Brazilian cheese bread with a chewy texture.
+81,Shakoy,https://spicesnflavors.com/wp-content/uploads/2024/07/close-up-image-of-stacked-twisted-donuts.jpg,Filipino twisted fried dough dusted with sugar.
+82,Spanakopita,https://cravinghomecooked.com/wp-content/uploads/2023/11/spanakopita-1.jpg,Greek spinach and feta pie in flaky pastry.
+83,Cachapa,https://cookandsalsa.com/wp-content/uploads/2023/01/cachapa-receta-venezolana.jpg,Venezuelan sweet corn pancake filled with cheese.
+84,Tteokbokki,https://christieathome.com/wp-content/uploads/2022/07/Tteokbokki-3.jpg,Korean spicy rice cakes in gochujang sauce.
+85,Mapo Tofu,https://omnivorescookbook.com/wp-content/uploads/2022/05/220510_Mapo-Tofu_4-1.jpg,A spicy and numbing Sichuan tofu dish with ground pork.
+86,Chicken Tinga,https://tastesbetterfromscratch.com/wp-content/uploads/2022/08/Chicken-Tinga-Web-9.jpg,Mexican shredded chicken in a smoky chipotle tomato sauce.
+87,Clam Chowder,https://www.crumbsnatched.com/wp-content/uploads/2022/05/clam-chowder-bread-bowl-featured.jpg,"A creamy soup made with clams, potatoes, and bacon."
+88,Empanadas,https://handletheheat.com/wp-content/uploads/2015/06/beef-empanadas-SQUARE.jpg,Savory stuffed pastry common in Latin America.
+89,Bulgogi,https://s23209.pcdn.co/wp-content/uploads/2019/04/240124_DD_korean-beef-bulgogi_274.jpg,Korean grilled marinated beef.
+90,Sauerbraten,http://eat.de/wp-content/uploads/2024/07/fraenkischer-sauerbraten-016.jpg,German pot roast marinated in vinegar and spices.
+91,Rendang,https://rasamalaysia.com/wp-content/uploads/2018/04/beef-rendang-thumb.jpg,Indonesian spicy beef stew simmered in coconut milk.
+92,Aloo Gobi,https://static01.nyt.com/images/2023/12/21/multimedia/ND-Aloo-Gobi-gkwc/ND-Aloo-Gobi-gkwc-mediumSquareAt3X.jpg,Indian dry curry made with potatoes and cauliflower.
+93,Galbi,https://live.staticflickr.com/6/5531/30503823454_a75aae1f48_c.jpg,Korean short ribs marinated and grilled.
+94,Chana Masala,https://cdn.loveandlemons.com/wp-content/uploads/opengraph/2023/07/chana-masala-recipe.jpg,Indian chickpea curry with tomato and spices.
+95,Tamago Kake Gohan,https://www.justonecookbook.com/wp-content/uploads/2024/04/Tamago-Kake-Gohan-Japanese-Egg-on-Rice-2613-II.jpg,Japanese rice dish with raw egg and soy sauce.
+96,Pozole,https://www.chilipeppermadness.com/wp-content/uploads/2022/10/Pozole-Rojo-SQ.jpg,Mexican hominy soup with pork or chicken.
+97,Nasi Goreng,https://dimsimlim.com/wp-content/uploads/2024/12/Spicy-Nasi-Goreng-1.jpg,Indonesian fried rice with sweet soy sauce and shrimp.
+98,Feijoada,https://www.dinnerwithjulie.com/wp-content/uploads/2016/12/feijoada-2-852x1200.jpg,Brazilian black bean stew with pork.
+99,Zurek,https://cdn.aniagotuje.com/pictures/articles/2025/03/75880916-v-1500x1500.jpg,Polish sour rye soup with sausage and egg.
+100,Adobo,https://www.recipetineats.com/uploads/2015/02/Filipino-Chicken-Adobo_6.jpg,"Filipino stew with vinegar, soy sauce, and garlic."
+101,Khao Soi,https://www.feastingathome.com/wp-content/uploads/2016/05/Khao-Soi-3.jpg,Thai coconut curry noodle soup.
+102,Bun Cha,https://www.recipetineats.com/tachyon/2019/01/Vietnamese-Pork-Meatballs_6.jpg,Vietnamese grilled pork with rice noodles and herbs.
+103,Plov,https://simplyhomecooked.com/wp-content/uploads/2025/02/plov-recipe-3.jpg,Uzbek rice pilaf with lamb and carrots.
+104,Kibbeh,https://feelgoodfoodie.net/wp-content/uploads/2020/10/Kibbeh-Balls-7.jpg,Levantine dish of bulgur and minced meat.

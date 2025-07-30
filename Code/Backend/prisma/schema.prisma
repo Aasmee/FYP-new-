@@ -1,0 +1,198 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  BOOKMARK
+  MENTION
+  SHARE
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  username        String    @unique
+  email           String    @unique
+  password        String
+  bio              String?         @db.VarChar(500)
+  profileImage     String?
+  isPrivate        Boolean         @default(false)
+  isVerified       Boolean         @default(false)
+  resetToken      String?
+  resetTokenExpiry DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  verificationCode String?
+  codeExpiry      DateTime?
+  posts           Post[]
+  likes           Like[]
+  comments        Comment[]
+  bookmarks       Bookmark[]
+  searchHistories UserSearchHistory[]
+
+  
+  notifications    Notification[]  @relation("Notification_recipient")
+  sentNotifications Notification[] @relation("Notification_sender")
+
+
+  // Relation with shopping list items
+  listItems       ListItem[]
+}
+
+model Post {
+  id            Int       @id @default(autoincrement())
+  title         String    @db.VarChar(255)
+  description   String    @db.VarChar(255)
+  imagePaths    Json
+  videoPaths    Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id])
+  likes         Like[]
+  comments      Comment[] 
+  bookmarks     Bookmark[]
+  notifications   Notification[]
+}
+
+model Like {
+  id          Int   @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      Int
+  postId      Int
+  user        User  @relation(fields: [userId], references: [id])
+  post        Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId], name: "userId_postId")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  userId    Int
+  postId    Int
+  parentId  Int? 
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation fields
+  replies   Comment[] @relation("CommentReplies")  // Child comments
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+}
+
+model Bookmark {
+  id          Int   @id @default(autoincrement())
+  userId      Int
+  postId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User  @relation(fields: [userId], references: [id])
+  post        Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId], name: "unique_bookmark")
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  type        NotificationType
+  read        Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
+  // Relationships
+  recipient   User             @relation("Notification_recipient", fields: [recipientId], references: [id])
+  recipientId Int
+  sender      User             @relation("Notification_sender", fields: [senderId], references: [id])
+  senderId    Int
+  post        Post?            @relation(fields: [postId], references: [id])
+  postId      Int?
+}
+
+model Recipe {
+  id          String             @id @default(cuid())
+  name        String
+  imageUrl    String
+  description String
+  ingredients RecipeIngredient[]
+  tags        RecipeTag[]
+  steps       Step[]
+}
+
+model Tag {
+  id                Int       @id @default(autoincrement())
+  name              String    @unique
+  recipes           RecipeTag[]
+  searchHistories   UserSearchHistory[]
+}
+
+model Ingredient {
+  id   Int       @id @default(autoincrement())
+  name String    @unique
+  recipes RecipeIngredient[]
+}
+
+model RecipeTag {
+  id        Int    @id @default(autoincrement())
+  recipe    Recipe @relation(fields: [recipeId], references: [id])
+  recipeId  String
+  tag       Tag    @relation(fields: [tagId], references: [id])
+  tagId     Int
+}
+
+model RecipeIngredient {
+  id            Int        @id @default(autoincrement())
+  recipe        Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId      String
+  ingredient    Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId  Int
+}
+
+model Step {
+  id       Int    @id @default(autoincrement())
+  order    Int
+  content  String
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+}
+
+model ListItem {
+  id        Int      @id @default(autoincrement())
+  name      String
+  quantity  Float
+  unit      String
+  isChecked Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Relation to User (Each user has their own list)
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model UserSearchHistory {
+  id        String   @id @default(cuid())
+  userId    Int
+  tagId     Int
+  createdAt DateTime @default(now())
+
+  user      User @relation(fields: [userId], references: [id])
+  tag       Tag  @relation(fields: [tagId], references: [id])
+}
+
+

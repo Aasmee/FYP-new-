@@ -1,0 +1,367 @@
+﻿id,order,content,recipeId
+1,1,Boil water and cook spaghetti according to package instructions.,1
+2,2,Heat olive oil in a pan and sautÃƒÂ© chopped onions and garlic.,1
+3,3,Add minced beef and cook until browned.,1
+4,4,"Pour in tomato sauce, add salt, and let it simmer for 15 minutes.",1
+5,5,Drain the spaghetti and mix it with the sauce.,1
+6,6,Serve hot and enjoy!,1
+7,1,"Boil pork belly with garlic, soy sauce, and salt for 1 hour.",2
+8,2,Let it rest and slice thinly.,2
+9,3,"Serve with lettuce, kimchi, and dipping sauce.",2
+10,1,Season pork chops with salt and pepper.,3
+11,2,"Dip in flour, egg, and panko breadcrumbs.",3
+12,3,Deep-fry in hot oil until golden brown.,3
+13,4,Serve with tonkatsu sauce.,3
+14,1,Cook ground beef with onions and taco seasoning.,4
+15,2,Warm tortillas on a dry pan.,4
+16,3,"Assemble tacos with lettuce, tomato, beef, and cheese.",4
+17,4,Serve with salsa.,4
+18,1,Lay seaweed on a bamboo mat.,5
+19,2,Spread cooked rice evenly over the seaweed.,5
+20,3,"Arrange carrot, cucumber, egg, and crab sticks.",5
+21,4,Roll tightly and slice into pieces.,5
+22,1,"Mix ground pork, cabbage, garlic, soy sauce, and sesame oil.",6
+23,2,Place a spoonful of filling onto dumpling wrappers.,6
+24,3,Fold and seal the edges.,6
+25,4,"Pan-fry until golden brown, then steam for 3 minutes.",6
+26,1,Crush graham crackers and mix with melted butter.,7
+27,2,Press the mixture into a baking pan.,7
+28,3,"Mix cream cheese, sugar, eggs, and vanilla until smooth.",7
+29,4,Pour over the crust and bake at 160Ã‚Â°C for 45 minutes.,7
+30,5,Let it cool and refrigerate before serving.,7
+31,1,Boil noodles and drain them.,8
+32,2,"Stir-fry garlic, chicken, and vegetables in a pan.",8
+33,3,Add noodles and soy sauce.,8
+34,4,Mix well and serve hot.,8
+35,1,Slice Cuban bread and spread mustard.,9
+36,2,"Layer roast pork, ham, Swiss cheese, and pickles.",9
+37,3,Grill until golden and crispy.,9
+38,4,Serve warm.,9
+39,1,Roll out pastry dough and cut into tart molds.,10
+40,2,"Mix egg yolks, sugar, milk, and vanilla.",10
+41,3,Pour mixture into tart shells.,10
+42,4,Bake at 180Ã‚Â°C for 15 minutes.,10
+43,1,Cook rice and set aside.,11
+44,2,SautÃƒÂ© vegetables separately.,11
+45,3,Fry an egg.,11
+46,4,"Assemble rice, vegetables, and egg.",11
+47,5,Top with gochujang and mix before eating.,11
+48,1,Melt chocolate and butter together.,12
+49,2,"Whisk in sugar, eggs, and flour.",12
+50,3,Pour into a baking tray and bake at 180Ã‚Â°C for 20 minutes.,12
+51,1,"Whisk mascarpone, egg yolks, and sugar.",13
+52,2,Dip ladyfingers in espresso and layer in a dish.,13
+53,3,Spread mascarpone mixture and repeat layers.,13
+54,4,Dust with cocoa powder and chill before serving.,13
+55,1,"Heat cream, sugar, and vanilla extract.",14
+56,2,Dissolve gelatin and mix with cream.,14
+57,3,Pour into molds and refrigerate for 4 hours.,14
+58,4,Serve with strawberry sauce.,14
+59,1,"Boil potatoes until soft, then mash with butter and milk.",15
+60,2,"Cook ground beef with onions, garlic, and carrots.",15
+61,3,Place meat mixture in a baking dish and top with mashed potatoes.,15
+62,4,Bake at 200Ã‚Â°C for 20 minutes until golden.,15
+63,1,"SautÃƒÂ© onions, garlic, and spices in olive oil.",16
+64,2,Add chopped tomatoes and simmer until thick.,16
+65,3,Make small wells in the sauce and crack in the eggs.,16
+66,4,Cover and cook until eggs are set.,16
+67,1,"SautÃƒÂ© sausage, chicken, onions, and bell peppers.",17
+68,2,"Add tomatoes, rice, and Cajun seasoning.",17
+69,3,Pour in broth and simmer until rice is cooked.,17
+70,4,Stir in shrimp and cook until pink.,17
+71,1,Soak rice noodles in warm water for 30 minutes.,18
+72,2,Heat oil in a pan and sautÃƒÂ© garlic.,18
+73,3,"Add shrimp and tofu, then stir-fry for a few minutes.",18
+74,4,Push ingredients to the side and scramble an egg in the pan.,18
+75,5,Drain noodles and add to the pan with sauce ingredients.,18
+76,6,Toss everything together and garnish with peanuts and lime.,18
+77,1,"Marinate chicken in yogurt, spices, and lemon juice for 2 hours.",19
+78,2,Cook the chicken in a pan until slightly charred.,19
+79,3,"In another pan, cook onions, garlic, ginger, and tomatoes.",19
+80,4,Blend the cooked mixture into a smooth sauce.,19
+81,5,"Return the sauce to the pan, add cream and butter.",19
+82,6,Add cooked chicken to the sauce and simmer until tender.,19
+83,1,"Cook sushi rice and season it with vinegar, sugar, and salt.",20
+84,2,Lay a sheet of nori on a bamboo mat.,20
+85,3,"Spread rice evenly over the nori, leaving space at the edges.",20
+86,4,"Place sliced fish, avocado, and cucumber on top.",20
+87,5,Roll tightly using the bamboo mat.,20
+88,6,Slice into bite-sized pieces and serve with soy sauce.,20
+89,1,"Boil broth with soy sauce, miso, and seasonings.",21
+90,2,Cook ramen noodles in boiling water.,21
+91,3,"Add sliced pork, egg, and vegetables to the broth.",21
+92,4,Pour hot broth over noodles and serve.,21
+93,1,Cook ground beef with tomato sauce.,22
+94,2,"Layer lasagna sheets, meat sauce, and cheese.",22
+95,3,Repeat layers and bake until golden brown.,22
+96,1,"SautÃƒÂ© onions, garlic, and tomatoes in a pan.",23
+97,2,Add rice and saffron-infused broth.,23
+98,3,"Place seafood and chicken on top, then simmer.",23
+99,1,"Blend chickpeas, onions, garlic, and herbs.",24
+100,2,Shape mixture into balls and deep-fry.,24
+101,3,Serve in pita with tahini sauce.,24
+102,1,Simmer beef bones with spices for hours to make broth.,25
+103,2,Cook rice noodles separately.,25
+104,3,Serve noodles in broth with beef slices and herbs.,25
+105,1,Cook marinated meat with spices and yogurt.,26
+106,2,"Layer rice and meat in a pot, then cover and steam.",26
+107,1,Cook ground meat with tomatoes and spices.,27
+108,2,Layer eggplant slices with meat sauce and bÃƒÂ©chamel.,27
+109,3,Bake until golden brown.,27
+110,1,Fry potatoes until crispy.,28
+111,2,Top with cheese curds and hot gravy.,28
+112,1,SautÃƒÂ© onions and garlic in oil.,29
+113,2,"Add beef, paprika, and broth, then simmer for hours.",29
+114,1,"Mix flour, butter, and water to make dough.",30
+115,2,Pipe dough into hot oil and fry until golden.,30
+116,3,Coat in cinnamon sugar and serve with chocolate sauce.,30
+117,1,Boil noodles until al dente.,31
+118,2,Heat oil and fry Szechuan peppercorns.,31
+119,3,Mix sauce ingredients and toss with noodles.,31
+120,4,Garnish with scallions and peanuts.,31
+121,1,Preheat oven to 400Ã‚Â°F (200Ã‚Â°C).,32
+122,2,Season chicken wings with salt and pepper.,32
+123,3,"Bake for 40-45 minutes, turning halfway.",32
+124,4,"Mix hot sauce, melted butter, and vinegar.",32
+125,5,Toss baked wings in sauce and serve.,32
+126,1,SautÃƒÂ© pork in a pot until browned.,33
+127,2,Add kimchi and stir-fry for 2 minutes.,33
+128,3,Pour in water and bring to a boil.,33
+129,4,"Add tofu, gochujang, and seasonings.",33
+130,5,Simmer for 15 minutes and serve hot.,33
+131,1,Cut jalapeÃƒÂ±os in half and remove seeds.,34
+132,2,Fill each half with cream cheese.,34
+133,3,"Coat in flour, egg, and breadcrumbs.",34
+134,4,Deep-fry until golden brown and crispy.,34
+135,5,Serve hot with dipping sauce.,34
+136,1,Heat oil and sautÃƒÂ© onions and garlic.,35
+137,2,Add chicken and cook until browned.,35
+138,3,"Stir in vinegar, spices, and tomatoes.",35
+139,4,Simmer for 30 minutes until thickened.,35
+140,5,Garnish with cilantro and serve with rice.,35
+141,1,Slice fresh mozzarella and tomatoes.,36
+142,2,Arrange them alternately on a plate.,36
+143,3,Drizzle olive oil and balsamic vinegar.,36
+144,4,Season with salt and pepper.,36
+145,5,Garnish with fresh basil leaves.,36
+146,1,Heat water and dissolve miso paste.,37
+147,2,Add dashi stock and bring to a simmer.,37
+148,3,Stir in tofu cubes and seaweed.,37
+149,4,Cook for 5 minutes and remove from heat.,37
+150,5,Serve hot with scallions as garnish.,37
+151,1,Cook pasta according to package instructions.,38
+152,2,SautÃƒÂ© garlic and chicken in butter.,38
+153,3,Add heavy cream and parmesan cheese.,38
+154,4,Toss pasta in the creamy sauce.,38
+155,5,Serve with additional cheese and parsley.,38
+156,1,"Marinate sliced lamb or chicken with olive oil, garlic, lemon juice, oregano, salt, and pepper for at least 2 hours.",39
+157,2,Grill or pan-fry the marinated meat until fully cooked and slightly crispy on the edges.,39
+158,3,Warm the pita bread in a dry pan or oven.,39
+159,4,Spread tzatziki sauce on the pita.,39
+160,5,"Add cooked meat, sliced tomatoes, onions, and lettuce.",39
+161,6,Wrap the gyro and serve warm.,39
+162,1,Boil water with lemongrass and lime leaves.,40
+163,2,"Add shrimp, mushrooms, and chili paste.",40
+164,3,Season with fish sauce and lime juice.,40
+165,4,Simmer for 5 minutes and serve hot.,40
+166,1,"SautÃƒÂ© onions, garlic, and celery in olive oil.",41
+167,2,"Add diced tomatoes, beans, and broth.",41
+168,3,Simmer for 20 minutes.,41
+169,4,Add pasta and cook until tender.,41
+170,5,Serve hot with grated parmesan.,41
+171,1,Caramelize sliced onions in butter over medium heat.,42
+172,2,"Add beef broth, thyme, and bay leaf. Simmer for 30 minutes.",42
+173,3,Ladle soup into bowls and top with toasted baguette slices.,42
+174,4,Sprinkle grated GruyÃƒÂ¨re cheese and broil until melted.,42
+175,1,"Blend tomatoes, cucumber, bell pepper, and garlic until smooth.",43
+176,2,"Add olive oil, vinegar, salt, and pepper to taste.",43
+177,3,Chill the mixture in the refrigerator for at least 2 hours.,43
+178,4,Serve cold with diced vegetables on top.,43
+179,1,"SautÃƒÂ© chopped onions, garlic, and carrots in olive oil.",44
+180,2,"Add lentils, vegetable broth, and bay leaf.",44
+181,3,Simmer for 30Ã¢â‚¬â€œ40 minutes until lentils are soft.,44
+182,4,"Season with salt, pepper, and a splash of lemon juice.",44
+183,1,Heat cream and vanilla until warm.,45
+184,2,"Whisk egg yolks with sugar, then slowly add warm cream.",45
+185,3,Pour into ramekins and bake in a water bath.,45
+186,4,"Chill, then sprinkle sugar and torch until caramelized.",45
+187,1,Scoop ice cream into small balls and freeze until solid.,46
+188,2,Wrap each ball with mochi dough.,46
+189,3,Dust with cornstarch and freeze again before serving.,46
+190,1,Beat egg whites until stiff peaks form.,47
+191,2,"Gradually add sugar and vinegar, beating until glossy.",47
+192,3,Shape meringue on baking sheet and bake low and slow.,47
+193,4,Top with whipped cream and fresh fruit once cool.,47
+194,1,Prepare pie crust and chill.,48
+195,2,Make caramel with condensed milk and butter.,48
+196,3,Pour caramel into crust and chill until set.,48
+197,4,Top with sliced bananas and whipped cream.,48
+198,1,Layer phyllo dough with melted butter and nuts.,49
+199,2,Repeat layers and bake until golden.,49
+200,3,Pour sugar syrup flavored with lemon and cinnamon over hot baklava.,49
+201,4,Let cool completely before serving.,49
+202,1,Butter two slices of bread.,50
+203,2,Place cheese between them and grill until golden brown.,50
+204,1,Toast bread slices to desired doneness.,51
+205,2,"Mash avocado with lemon juice, salt, and pepper.",51
+206,3,Spread avocado on toast and garnish as desired.,51
+207,1,Slice cucumbers and onions thinly.,52
+208,2,"Mix vinegar, sugar, salt, and dill for dressing.",52
+209,3,Combine cucumbers with dressing and chill before serving.,52
+210,1,Crack eggs into a bowl and whisk with salt.,53
+211,2,Melt butter in a pan and pour in the eggs.,53
+212,3,Gently stir until just set and creamy.,53
+213,1,"Combine fruits, yogurt, and honey in a blender.",54
+214,2,Blend until smooth and serve chilled.,54
+215,1,Sear beef tenderloin and let cool.,55
+216,2,Wrap in mushroom duxelles and prosciutto.,55
+217,3,Wrap in puff pastry and chill.,55
+218,4,Bake until golden and meat is medium rare.,55
+219,1,"Marinate chicken in wine, garlic, and herbs overnight.",56
+220,2,"Sear chicken and bacon, then cook with vegetables and wine.",56
+221,3,Simmer until chicken is tender and sauce thickens.,56
+222,1,Air dry the duck and season with spices.,57
+223,2,Roast duck until skin is crisp.,57
+224,3,"Serve with pancakes, hoisin sauce, and scallions.",57
+225,1,"SautÃƒÂ© vegetables like zucchini, eggplant, and bell peppers.",58
+226,2,Layer in a dish with tomato sauce and herbs.,58
+227,3,Bake until vegetables are tender.,58
+228,1,Sear veal shanks and set aside.,59
+229,2,"Cook mirepoix and add wine, broth, and tomatoes.",59
+230,3,Return shanks and braise until tender.,59
+231,4,Serve with gremolata and risotto or polenta.,59
+232,1,"Mix flour, milk, eggs, and sugar to make batter.",60
+233,2,Pour onto a hot griddle and cook both sides.,60
+234,3,"Serve with syrup, fruit, or butter.",60
+235,1,"Whisk eggs, milk, and cinnamon.",61
+236,2,Dip bread slices and fry until golden.,61
+237,3,Serve with syrup and powdered sugar.,61
+238,1,Boil oats with milk or water.,62
+239,2,Stir until thick and creamy.,62
+240,3,"Top with fruits, nuts, or sweetener of choice.",62
+241,1,Scramble eggs and cook sausage.,63
+242,2,"Fill tortilla with eggs, sausage, cheese, and salsa.",63
+243,3,Roll up and toast in a pan or wrap in foil.,63
+244,1,Poach eggs in simmering water with vinegar.,64
+245,2,Toast English muffins and layer with ham.,64
+246,3,Top with poached egg and hollandaise sauce.,64
+247,1,Prepare the ingredients.,65
+248,2,Cook the main components as required.,65
+249,3,Assemble and serve the dish.,65
+250,1,Prepare the ingredients.,66
+251,2,Cook the main components as required.,66
+252,3,Assemble and serve the dish.,66
+253,1,Prepare the ingredients.,67
+254,2,Cook the main components as required.,67
+255,3,Assemble and serve the dish.,67
+256,1,Prepare the ingredients.,68
+257,2,Cook the main components as required.,68
+258,3,Assemble and serve the dish.,68
+259,1,Prepare the ingredients.,69
+260,2,Cook the main components as required.,69
+261,3,Assemble and serve the dish.,69
+262,1,Prepare the ingredients.,70
+263,2,Cook the main components as required.,70
+264,3,Assemble and serve the dish.,70
+265,1,Prepare the ingredients.,71
+266,2,Cook the main components as required.,71
+267,3,Assemble and serve the dish.,71
+268,1,Prepare the ingredients.,72
+269,2,Cook the main components as required.,72
+270,3,Assemble and serve the dish.,72
+271,1,Prepare the ingredients.,73
+272,2,Cook the main components as required.,73
+273,3,Assemble and serve the dish.,73
+274,1,Prepare the ingredients.,74
+275,2,Cook the main components as required.,74
+276,3,Assemble and serve the dish.,74
+277,1,Prepare the ingredients.,75
+278,2,Cook the main components as required.,75
+279,3,Assemble and serve the dish.,75
+280,1,Prepare the ingredients.,76
+281,2,Cook the main components as required.,76
+282,3,Assemble and serve the dish.,76
+283,1,Prepare the ingredients.,77
+284,2,Cook the main components as required.,77
+285,3,Assemble and serve the dish.,77
+286,1,Prepare the ingredients.,78
+287,2,Cook the main components as required.,78
+288,3,Assemble and serve the dish.,78
+289,1,Prepare the ingredients.,79
+290,2,Cook the main components as required.,79
+291,3,Assemble and serve the dish.,79
+292,1,Prepare the ingredients.,80
+293,2,Cook the main components as required.,80
+294,3,Assemble and serve the dish.,80
+295,1,Prepare the ingredients.,81
+296,2,Cook the main components as required.,81
+297,3,Assemble and serve the dish.,81
+298,1,Prepare the ingredients.,82
+299,2,Cook the main components as required.,82
+300,3,Assemble and serve the dish.,82
+301,1,Prepare the ingredients.,83
+302,2,Cook the main components as required.,83
+303,3,Assemble and serve the dish.,83
+304,1,Prepare the ingredients.,84
+305,2,Cook the main components as required.,84
+306,3,Assemble and serve the dish.,84
+307,1,Prepare the ingredients.,85
+308,2,Cook the main components as required.,85
+309,3,Assemble and serve the dish.,85
+310,1,Prepare the ingredients.,86
+311,2,Cook the main components as required.,86
+312,3,Assemble and serve the dish.,86
+313,1,Prepare the ingredients.,87
+314,2,Cook the main components as required.,87
+315,3,Assemble and serve the dish.,87
+316,1,Prepare the ingredients.,88
+317,2,Cook the main components as required.,88
+318,3,Assemble and serve the dish.,88
+319,1,Prepare the ingredients.,89
+320,2,Cook the main components as required.,89
+321,3,Assemble and serve the dish.,89
+322,1,Prepare the ingredients.,90
+323,2,Cook the main components as required.,90
+324,3,Assemble and serve the dish.,90
+325,1,Prepare the ingredients.,91
+326,2,Cook the main components as required.,91
+327,3,Assemble and serve the dish.,91
+328,1,Prepare the ingredients.,92
+329,2,Cook the main components as required.,92
+330,3,Assemble and serve the dish.,92
+331,1,Prepare the ingredients.,93
+332,2,Cook the main components as required.,93
+333,3,Assemble and serve the dish.,93
+334,1,Prepare the ingredients.,94
+335,2,Cook the main components as required.,94
+336,3,Assemble and serve the dish.,94
+337,1,Prepare the ingredients.,95
+338,2,Cook the main components as required.,95
+339,3,Assemble and serve the dish.,95
+340,1,Prepare the ingredients.,96
+341,2,Cook the main components as required.,96
+342,3,Assemble and serve the dish.,96
+343,1,Prepare the ingredients.,97
+344,2,Cook the main components as required.,97
+345,3,Assemble and serve the dish.,97
+346,1,Prepare the ingredients.,98
+347,2,Cook the main components as required.,98
+348,3,Assemble and serve the dish.,98
+349,1,Prepare the ingredients.,99
+350,2,Cook the main components as required.,99
+351,3,Assemble and serve the dish.,99
+352,1,Prepare the ingredients.,100
+353,2,Cook the main components as required.,100
+354,3,Assemble and serve the dish.,100
+355,1,Prepare the ingredients.,101
+356,2,Cook the main components as required.,101
+357,3,Assemble and serve the dish.,101
+358,1,Prepare the ingredients.,102
+359,2,Cook the main components as required.,102
+360,3,Assemble and serve the dish.,102
+361,1,Prepare the ingredients.,103
+362,2,Cook the main components as required.,103
+363,3,Assemble and serve the dish.,103
+364,1,Prepare the ingredients.,104
+365,2,Cook the main components as required.,104
+366,3,Assemble and serve the dish.,104
