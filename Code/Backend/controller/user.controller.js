@@ -12,7 +12,7 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors({
-  origin: 'http://192.168.1.6:3000',  
+  origin: 'http://192.168.1.6:3001',  
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
  allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -22,44 +22,46 @@ const prisma = new PrismaClient();
 
 //Register
 export const register = async (req, res)=>{ 
-    console.log("📩 Received registration request:", req.body);
-    const{ username, email, password, confirmPassword }=req.body;
+  console.log("📩 Received registration request:", req.body);
+  const{ username, email, password, confirmPassword }=req.body;
 
-    if (!email || !username || !password || !confirmPassword) {
-      return res.status(400).json({ error: "All fields are required." });
+  if (!email || !username || !password || !confirmPassword) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+  if (password !== confirmPassword) {
+    return res.status(400).json({ error: "Passwords do not match." });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ error: "Password must be at least 6 characters long." });
+  }
+  try {  
+    const existingUser = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email is already in use." });
     }
-      if (password !== confirmPassword) {
-        return res.status(400).json({ error: "Passwords do not match." });
-      }
-      if (password.length < 6) {
-        return res.status(400).json({ error: "Password must be at least 6 characters long." });
-      }
-      try {  
-        const existingUser = await prisma.user.findUnique({
-          where: { email: email.toLowerCase() },
-        });
-        if (existingUser) {
-          return res.status(400).json({ error: "Email is already in use." });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
+  
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = await prisma.user.create({
-          data: {
-            username: username.toLowerCase(),
-            email: email.toLowerCase(),
-            password: hashedPassword, 
-          },
-        });
-        console.log("User registered successfully:", newUser);
+    const newUser = await prisma.user.create({
+      data: {
+        username: username.toLowerCase(),
+        email: email.toLowerCase(),
+        password: hashedPassword, 
+      },
+    });
+  
+    console.log("User registered successfully:", newUser);
 
-        const { password: _, ...userWithoutPassword } = newUser;
-        return res.status(201).json({ message: "User registered successfully", user: userWithoutPassword });
+    const { password: _, ...userWithoutPassword } = newUser;
+    return res.status(201).json({ message: "User registered successfully", user: userWithoutPassword });
     
-      } catch (error) {
-        console.error("Registration error:", JSON.stringify(error));
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
-    };
+  } catch (error) {
+    console.error("Registration error:", JSON.stringify(error));
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 
 
@@ -242,49 +244,6 @@ export const resetPassword = async (req, res) => {
 
 
 
-
-//getProfile
-export const getProfile = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    console.log("User ID:", userId);
-    if (isNaN(userId)) {
-      return res.status(400).json({ error: "Invalid user ID format" });
-    }
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        bio: true,
-        profileImage: true,
-        createdAt: true,
-        _count: {
-          select: {
-            posts: true,
-          }
-        }
-      }
-    });
-
-    if (!user) return res.status(404).json({ error: "User not found" });
-    
-    res.json({
-      ...user,
-      postCount: user._count.posts,
-    });
-    
-  } catch (error) {
-    console.error("Get profile error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-
-
-
-
 // //updateProfile 
 // export const updateProfile = async (req, res) => {
 //   try {
@@ -409,3 +368,149 @@ export const updateFcmToken = async (req, res) => {
 };
 
 
+// export const getProfile = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+
+//     const user = await prisma.user.findUnique({
+//       where: { id: userId },
+//       select: {
+//         id: true,
+//         username: true,
+//         email: true,
+//         bio: true,
+//         profileImage: true,
+//         createdAt: true,
+//         posts: {
+//           select: {
+//             id: true,
+//             title: true,
+//             description: true,
+//             imagePaths: true,
+//             videoPaths: true,
+//             createdAt: true,
+//           },
+//           orderBy: { createdAt: 'desc' },
+//         },
+//         bookmarks: {
+//           select: {
+//             post: {
+//               select: {
+//                 id: true,
+//                 title: true,
+//                 description: true,
+//                 imagePaths: true,
+//                 videoPaths: true,
+//                 createdAt: true,
+//                 user: {
+//                   select: {
+//                     id: true,
+//                     username: true,
+//                     profileImage: true,
+//                   },
+//                 },
+//               }
+//             }
+//           },
+//           orderBy: { createdAt: 'desc' },
+//         },
+//       }
+//     });
+
+//     if (!user) return res.status(404).json({ error: "User not found" });
+
+//     const savedPosts = user.bookmarks.map(b => b.post);
+
+//     res.json({
+//       id: user.id,
+//       username: user.username,
+//       email: user.email,
+//       bio: user.bio,
+//       profileImage: user.profileImage,
+//       createdAt: user.createdAt,
+//       posts: user.posts,
+//       savedPosts: savedPosts,
+//     });
+//   } catch (error) {
+//     console.error("Get profile error:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+export const getProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Fetch user with own posts & bookmarks
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        posts: {
+          include: {
+            user: { select: { id: true, username: true, profileImage: true } },
+            likes: { select: { id: true } },
+            _count: { select: { likes: true, comments: true } },
+          },
+          orderBy: { createdAt: "desc" },
+        },
+        bookmarks: {
+          include: {
+            post: {
+              include: {
+                user: { select: { id: true, username: true, profileImage: true } },
+                likes: { select: { id: true } },
+                _count: { select: { likes: true, comments: true } },
+              },
+            },
+          },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Format own posts
+    const posts = user.posts.map((p) => ({
+      id: p.id,
+      user: p.user,
+      description: p.description,
+      imagePaths: p.imagePaths || [],
+      videoPaths: p.videoPaths || [],
+      mediaPaths: [...(p.imagePaths || []), ...(p.videoPaths || [])],
+      createdAt: p.createdAt,
+      likes: p._count.likes,
+      comments: p._count.comments,
+      hasLiked: p.likes.some((like) => like.id === userId),
+      isBookmarked: false,
+    }));
+
+    // Format saved posts
+    const savedPosts = user.bookmarks.map((b) => ({
+      id: b.post.id,
+      user: b.post.user,
+      description: b.post.description,
+      imagePaths: b.post.imagePaths || [],
+      videoPaths: b.post.videoPaths || [],
+      mediaPaths: [...(b.post.imagePaths || []), ...(b.post.videoPaths || [])],
+      createdAt: b.post.createdAt,
+      likes: b.post._count.likes,
+      comments: b.post._count.comments,
+      hasLiked: b.post.likes.some((like) => like.id === userId),
+      isBookmarked: true,
+    }));
+
+    res.json({
+      id: user.id,
+      username: user.username,
+      profileImage: user.profileImage,
+      posts,
+      savedPosts,
+    });
+  } catch (error) {
+    console.error("Profile fetch error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

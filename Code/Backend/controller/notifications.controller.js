@@ -40,9 +40,6 @@ app.use(cors());
         case 'BOOKMARK':
           message = `${notification.sender.username} bookmarked your post`;
           break;
-        case 'FOLLOW':
-          message = `${notification.sender.username} started following you`;
-          break;
         default:
           message = 'New notification';
       }

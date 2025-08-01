@@ -1,118 +1,195 @@
-// lib/screens/profile.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/profileServices.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/screens/Profile/post_detail.dart';
+import 'package:frontend/screens/Profile/settings.dart';
+import 'package:frontend/services/authServices.dart';
+import 'package:frontend/services/saved_posts_notifier.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class ProfileScreen extends StatefulWidget {
-  final String token;
-
-  const ProfileScreen({super.key, required this.token});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final ProfileService _profileService = ProfileService();
-  Map<String, dynamic>? userData;
-  List<Map<String, dynamic>> userPosts = [];
-  bool isLoading = true;
+class _ProfilePageState extends State<ProfilePage> {
+  bool showPosts = true;
+  Map<String, dynamic>? profileData;
+  static final String _baseUrl = ApiConfig.baseUrl;
 
   @override
   void initState() {
     super.initState();
-    loadUserProfile();
+    loadProfile();
   }
 
-  Future<void> loadUserProfile() async {
-    final profile = await _profileService.fetchUserProfile(widget.token);
-    if (profile != null) {
-      setState(() {
-        userData = profile;
-      });
-      final posts = await _profileService.fetchUserPosts(
-        widget.token,
-        profile['id'],
+  Future<void> loadProfile() async {
+    final token = await AuthService.getToken();
+    final response = await http.get(
+      Uri.parse('$_baseUrl/user/profile'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      debugPrint('Profile data: $data');
+      savedPostsNotifier.setPosts(
+        List<Map<String, dynamic>>.from(data['savedPosts']),
       );
       setState(() {
-        userPosts = posts;
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
+        profileData = data;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (profileData == null) {
+      return const Center(child: CircularProgressIndicator());
     }
 
-    if (userData == null) {
-      return const Scaffold(
-        body: Center(child: Text("Failed to load user data")),
-      );
-    }
+    final posts = List<Map<String, dynamic>>.from(profileData!['posts']);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("My Profile")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // Profile info
-            Row(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text("Profile"),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.menu, color: Colors.black),
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => Settings()));
+              },
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
-                  radius: 40,
+                  radius: 30,
                   backgroundImage: NetworkImage(
-                    userData!['profilePicture'] ??
-                        'https://via.placeholder.com/150',
-                  ), // fallback placeholder
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  userData!['username'],
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                    profileData!['profileImage'] ??
+                        'https://i.pravatar.cc/150?u=${profileData!['username']}',
                   ),
+                ),
+                Text(
+                  profileData!['username'],
+                  style: const TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+          ),
+          const SizedBox(height: 20),
 
-            // Posts
-            Expanded(
-              child:
-                  userPosts.isEmpty
-                      ? const Center(child: Text("No posts yet"))
-                      : ListView.builder(
-                        itemCount: userPosts.length,
-                        itemBuilder: (context, index) {
-                          final post = userPosts[index];
-                          return Card(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            child: ListTile(
-                              title: Text(post['caption'] ?? ''),
-                              leading:
-                                  post['imageUrls'] != null &&
-                                          post['imageUrls'].isNotEmpty
-                                      ? Image.network(
-                                        post['imageUrls'][0],
-                                        width: 60,
-                                        height: 60,
-                                        fit: BoxFit.cover,
-                                      )
-                                      : const Icon(Icons.image_not_supported),
-                            ),
-                          );
-                        },
-                      ),
+          // Toggle buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildToggleButton("Posts", showPosts, () {
+                setState(() => showPosts = true);
+              }),
+              _buildToggleButton("Saved", !showPosts, () {
+                setState(() => showPosts = false);
+              }),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          Expanded(
+            child:
+                showPosts
+                    ? _buildPostsGrid(posts)
+                    : ValueListenableBuilder<List<Map<String, dynamic>>>(
+                      valueListenable: savedPostsNotifier,
+                      builder: (context, savedPosts, _) {
+                        if (savedPosts.isEmpty) {
+                          return const Center(child: Text("No saved posts"));
+                        }
+                        return _buildPostsGrid(savedPosts);
+                      },
+                    ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPostsGrid(List<Map<String, dynamic>> posts) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      itemCount: posts.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+      ),
+      itemBuilder: (context, index) {
+        final post = posts[index];
+        final imagePaths = post['imagePaths'];
+
+        if (imagePaths is List &&
+            imagePaths.isNotEmpty &&
+            imagePaths[0] != null) {
+          final imageUrl = '$_baseUrl${imagePaths[0]}';
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => PostDetailScreen(post: post)),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(imageUrl, fit: BoxFit.cover),
             ),
-          ],
+          );
+        } else {
+          if (kDebugMode) {
+            print(
+              'Skipping post at index $index because imagePaths is invalid: $imagePaths',
+            );
+          }
+          return const SizedBox(); // Empty box if no image
+        }
+      },
+    );
+  }
+
+  Widget _buildToggleButton(String label, bool isActive, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 160,
+        height: 50,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0xFF9C5F2B) : Colors.brown[200],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

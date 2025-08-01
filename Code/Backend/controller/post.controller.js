@@ -9,13 +9,15 @@ export const addPost = async (req, res) => {
   try {
     const { title, description } = req.body;
     const files = req.files;
-    const userId = req.user.id;
+    const userId = req.user?.id;
+
+    console.log("User:", req.user); // 💥 Add this
+    console.log("Token User ID:", userId); // 💥 Add this
+    console.log("Request Body:", req.body);
 
     if (!userId) {
       return res.status(401).json({ message: "User ID is not authenticated" });
     }
-
-    console.log("Request Body:", req.body);
 
     const imagePaths = files?.['image']
       ? files['image'].map(file => `/uploads/postImages/${file.filename}`)
@@ -23,9 +25,6 @@ export const addPost = async (req, res) => {
     const videoPaths = files?.['video']
       ? files['video'].map(file => `/uploads/postVideos/${file.filename}`)
       : [];
-
-    console.log("Uploaded Video Paths:", videoPaths);
-    console.log("Uploaded Image Paths:", imagePaths);
 
     const newPost = await prisma.post.create({
       data: {
@@ -47,6 +46,7 @@ export const addPost = async (req, res) => {
   }
 };
 
+
 export const getPost = async (req, res) => {
   try {
     const { userId, feedType } = req.query;
@@ -59,27 +59,6 @@ export const getPost = async (req, res) => {
       bookmarks: { select: { userId: true } },
     };
     let whereClause = {};
-
-    // if (feedType === 'following' && userId) {
-    //   const followedUsers = await prisma.follow.findMany({
-    //     where: { followerId: parseInt(userId) },
-    //     select: { followingId: true }
-    //   });
-
-    //   const followingIds = followedUsers.map(f => f.followingId);
-    //   if (followingIds.length === 0) {
-    //     return res.status(200).json([]);
-    //   }
-    //   whereClause.userId = { in: followingIds };
-    // } else if (feedType === 'explore' && userId) {
-    //   const followedUsers = await prisma.follow.findMany({
-    //     where: { followerId: parseInt(userId) },
-    //     select: { followingId: true }
-    //   });
-
-    //   const followingIds = followedUsers.map(f => f.followingId);
-    //   whereClause.userId = { notIn: followingIds };
-    // }
 
     const posts = await prisma.post.findMany({
       where: whereClause,

@@ -20,7 +20,7 @@ class NavBarState extends State<NavBar> {
     RecipeListScreen(),
     CreatePostScreen(),
     Pantry(),
-    ProfileScreen(token: ''),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

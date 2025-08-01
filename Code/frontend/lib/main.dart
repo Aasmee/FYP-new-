@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Auth Demo',
+      title: 'Ingreedy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.red),
       initialRoute: '/login',

@@ -4,7 +4,9 @@ const prisma = new PrismaClient();
 // Add a comment
 export const addComment = async (req, res) => {
     try {
-        const { userId, postId, text, parentId } = req.body;
+        // Use userId from middleware if available, else from body (for backward compatibility)
+        const userId = req.user?.id || req.body.userId;
+        const { postId, text, parentId } = req.body;
 
         if (!userId || !postId) {
             return res.status(400).json({ message: "Missing required fields" });
@@ -14,7 +16,6 @@ export const addComment = async (req, res) => {
         const postExists = await prisma.post.findUnique({
             where: { id: parseInt(postId) }
         });
-        
         if (!postExists) {
             return res.status(404).json({ message: "Post not found" });
         }
@@ -23,7 +24,6 @@ export const addComment = async (req, res) => {
         const userExists = await prisma.user.findUnique({
             where: { id: parseInt(userId) }
         });
-        
         if (!userExists) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -39,37 +39,46 @@ export const addComment = async (req, res) => {
         }
 
         const comment = await prisma.comment.create({
-            data: { userId: parseInt(userId), postId: parseInt(postId), text, parentId: parentId ? parseInt(parentId) : null },
-        
-        include: {
-            user: {
-                select: {
-                    username: true
-                }
+            data: {
+                userId: parseInt(userId),
+                postId: parseInt(postId),
+                text,
+                parentId: parentId ? parseInt(parentId) : null
             },
-            parent: true,
-            replies: true   
-        }
-    });
+            include: {
+                user: { select: { username: true } },
+                parent: true,
+                replies: true
+            }
+        });
+
+        // Create notification
+        await prisma.notification.create({
+            data: {
+                type: 'COMMENT',
+                recipientId: postExists.userId,
+                senderId: parseInt(userId),
+                postId: parseInt(postId)
+            }
+        });
 
         res.status(201).json({ message: "Comment added", comment });
     } catch (error) {
         console.error("Error adding comment:", error);
-        res.status(500).json({ message: "Something went wrong" });
 
-        // Handle foreign key constraint error specifically
         if (error.code === 'P2003') {
-            return res.status(400).json({ 
-                message: "Invalid user or post ID" 
+            return res.status(400).json({
+                message: "Invalid user or post ID"
             });
         }
-        
-        res.status(500).json({ 
+
+        res.status(500).json({
             message: "Internal server error",
-            error: error.message 
+            error: error.message
         });
     }
 };
+
 
 
 // Get comments for a post

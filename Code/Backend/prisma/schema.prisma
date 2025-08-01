@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -21,49 +15,61 @@ enum NotificationType {
   SHARE
 }
 
+enum PantryCategory {
+  VEGETABLE
+  FRUIT
+  MEAT
+  DAIRY
+  GRAIN
+  SPICE
+  BEVERAGE
+  OTHER
+}
+
 model User {
-  id              Int       @id @default(autoincrement())
-  username        String    @unique
-  email           String    @unique
-  password        String
-  bio              String?         @db.VarChar(500)
-  profileImage     String?
-  isPrivate        Boolean         @default(false)
-  isVerified       Boolean         @default(false)
-  resetToken      String?
-  resetTokenExpiry DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  verificationCode String?
-  codeExpiry      DateTime?
-  posts           Post[]
-  likes           Like[]
-  comments        Comment[]
-  bookmarks       Bookmark[]
-  searchHistories UserSearchHistory[]
+  id                Int       @id @default(autoincrement())
+  username          String    @unique
+  email             String    @unique
+  password          String
+  bio               String?         @db.VarChar(500)
+  profileImage      String?
+  isPrivate         Boolean         @default(false)
+  isVerified        Boolean         @default(false)
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  verificationCode  String?
+  codeExpiry        DateTime?
+  posts             Post[]
+  likes             Like[]
+  comments          Comment[]
+  bookmarks         Bookmark[]
+  searchHistories   UserSearchHistory[]
 
   
-  notifications    Notification[]  @relation("Notification_recipient")
+  notifications     Notification[]  @relation("Notification_recipient")
   sentNotifications Notification[] @relation("Notification_sender")
 
 
   // Relation with shopping list items
-  listItems       ListItem[]
+  listItems         ListItem[]
+  pantryItems       Pantry[]
 }
 
 model Post {
-  id            Int       @id @default(autoincrement())
-  title         String    @db.VarChar(255)
-  description   String    @db.VarChar(255)
-  imagePaths    Json
-  videoPaths    Json?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  userId        Int
-  user          User      @relation(fields: [userId], references: [id])
-  likes         Like[]
-  comments      Comment[] 
-  bookmarks     Bookmark[]
+  id              Int       @id @default(autoincrement())
+  title           String    @db.VarChar(255)
+  description     String    @db.VarChar(255)
+  imagePaths      Json
+  videoPaths      Json?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  likes           Like[]
+  comments        Comment[] 
+  bookmarks       Bookmark[]
   notifications   Notification[]
 }
 
@@ -143,9 +149,9 @@ model Tag {
 }
 
 model Ingredient {
-  id   Int       @id @default(autoincrement())
-  name String    @unique
-  recipes RecipeIngredient[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  recipes   RecipeIngredient[]
 }
 
 model RecipeTag {
@@ -182,7 +188,20 @@ model ListItem {
 
   // Relation to User (Each user has their own list)
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user      User @relation(fields: [userId], references: [id])
+}
+
+model Pantry {
+  id        Int             @id @default(autoincrement())
+  name      String
+  quantity  Float
+  unit      String
+  category  String          @default("Others")
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  userId    Int
+  user      User            @relation(fields: [userId], references: [id])
 }
 
 model UserSearchHistory {
@@ -194,5 +213,3 @@ model UserSearchHistory {
   user      User @relation(fields: [userId], references: [id])
   tag       Tag  @relation(fields: [tagId], references: [id])
 }
-
-

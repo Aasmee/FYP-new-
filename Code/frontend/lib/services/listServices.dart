@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:frontend/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String baseUrl =
-    "http://192.168.1.6:3001"; // Replace with your backend IP
+final String _baseUrl = "${ApiConfig.baseUrl}/list";
 
 Future<String?> getToken() async {
   final prefs = await SharedPreferences.getInstance();
@@ -13,7 +13,7 @@ Future<String?> getToken() async {
 Future<List<dynamic>> fetchListItems() async {
   final token = await getToken();
   final response = await http.get(
-    Uri.parse('$baseUrl/list'),
+    Uri.parse('$_baseUrl/'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ Future<List<dynamic>> fetchListItems() async {
 Future<bool> addListItem(String name, double quantity, String unit) async {
   final token = await getToken();
   final response = await http.post(
-    Uri.parse('$baseUrl/list'),
+    Uri.parse('$_baseUrl/'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ Future<bool> addListItem(String name, double quantity, String unit) async {
 Future<bool> updateListItem(int id, {bool? isChecked}) async {
   final token = await getToken();
   final response = await http.patch(
-    Uri.parse('$baseUrl/list/$id'),
+    Uri.parse('$_baseUrl/$id'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ Future<bool> updateListItem(int id, {bool? isChecked}) async {
 Future<bool> deleteListItem(int id) async {
   final token = await getToken();
   final response = await http.delete(
-    Uri.parse('$baseUrl/list/$id'),
+    Uri.parse('$_baseUrl/$id'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',

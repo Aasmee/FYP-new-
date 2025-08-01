@@ -1,65 +1,67 @@
-// home.dart
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/constants.dart';
 import 'package:frontend/screens/Home/list.dart';
+import 'package:frontend/screens/Home/notification.dart';
+import 'package:frontend/screens/Home/widgets/post_card.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  HomeState createState() => HomeState();
+  State<Home> createState() => _HomeState();
 }
 
-class HomeState extends State<Home> {
-  bool isPressed = false;
-  bool showNotificationContainer = false;
-  bool showCommentContainer = false;
+class _HomeState extends State<Home> {
+  List<dynamic> posts = [];
   bool isLoading = true;
-  int? currentPostId; // Track which post's comments are being viewed
+  String errorMessage = '';
+  static final String _baseUrl = "${ApiConfig.baseUrl}/post";
 
   @override
   void initState() {
     super.initState();
-    _fetchPosts();
+    fetchPosts();
   }
 
-  Future<void> _fetchPosts() async {
+  Future<void> fetchPosts() async {
     try {
-      setState(() {
-        isLoading = true;
-      });
-
-      setState(() {
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      // Consider showing an error message to the user
-      debugPrint('Error fetching posts: $e');
-    }
-  }
-
-  void _toggleNotificationContainer() {
-    setState(() {
-      isPressed = !isPressed;
-      showNotificationContainer = !showNotificationContainer;
-      if (showNotificationContainer) {
-        // If showing notifications, hide comments
-        showCommentContainer = false;
+      final response = await http.get(Uri.parse('$_baseUrl/get'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          posts = data;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to fetch posts: ${response.statusCode}';
+          isLoading = false;
+        });
       }
-    });
-  }
-
-  void _hideCommentContainer() {
-    setState(() {
-      showCommentContainer = false;
-      currentPostId = null;
-    });
+    } catch (error) {
+      setState(() {
+        errorMessage = 'Error fetching posts: $error';
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (errorMessage.isNotEmpty) {
+      return Center(child: Text(errorMessage));
+    }
+
+    if (posts.isEmpty) {
+      return const Center(child: Text("No posts found"));
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -69,86 +71,30 @@ class HomeState extends State<Home> {
           style: TextStyle(color: Colors.black, fontStyle: FontStyle.italic),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.list_alt, color: Colors.black),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ListPage()),
-                    );
-                  },
+          IconButton(
+            icon: const Icon(Icons.list_alt, color: Colors.black),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => const ListPage()));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NotificationPage(),
                 ),
-                IconButton(
-                  icon: Icon(
-                    isPressed
-                        ? Icons.notifications
-                        : Icons.notifications_outlined,
-                    color: Colors.black,
-                  ),
-                  onPressed: _toggleNotificationContainer,
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : RefreshIndicator(
-                onRefresh: _fetchPosts,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text("Text"),
-                  ),
-                ),
-              ),
-          if (showNotificationContainer)
-            Positioned(
-              top: 0,
-              right: 5,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.25),
-                      blurRadius: 4,
-                      spreadRadius: -1,
-                      offset: Offset(1, 2),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'No notifications',
-                    style: TextStyle(color: Color(0xFF5E5E5E), fontSize: 12),
-                  ),
-                ),
-              ),
-            ),
-          // if (showCommentContainer)
-          //   Positioned(
-          //     bottom: 0,
-          //     left: 0,
-          //     right: 0,
-          //     child: CommentBox(
-          //       onClose: _hideCommentContainer,
-          //       postId: currentPostId,
-          //     ),
-          //   ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: posts.map((post) => PostWidget(post: post)).toList(),
+        ),
       ),
     );
   }

@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/recipe.model.dart';
 import 'package:frontend/screens/Recipe/recipe_tile.dart';
 import 'package:frontend/services/recipe.service.dart';
-import 'package:http/http.dart' as http;
+import 'package:frontend/widgets/scan_icon.dart';
 
 class RecipeListScreen extends StatefulWidget {
   const RecipeListScreen({super.key});
@@ -14,77 +12,60 @@ class RecipeListScreen extends StatefulWidget {
 }
 
 class _RecipeListScreenState extends State<RecipeListScreen> {
-  late Future<List<Recipe>> futureRecipes;
   List<Recipe> allRecipes = [];
   List<Recipe> filteredRecipes = [];
   final TextEditingController searchController = TextEditingController();
   String selectedTag = "";
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    futureRecipes = RecipeService.fetchRecipes();
-    futureRecipes.then((recipes) {
+    _loadRecipes();
+  }
+
+  Future<void> _loadRecipes() async {
+    try {
+      final recipes = await RecipeService.fetchRecipes();
       setState(() {
         allRecipes = recipes;
         filteredRecipes = recipes;
+        isLoading = false;
       });
-    });
-  }
-
-  void _filterRecipes(String query) {
-    final results =
-        allRecipes
-            .where(
-              (recipe) =>
-                  recipe.name.toLowerCase().contains(query.toLowerCase()) ||
-                  recipe.tags.any(
-                    (tag) => tag.toLowerCase().contains(query.toLowerCase()),
-                  ),
-            )
-            .toList();
-
-    // Collect tags of filtered recipes
-    final searchedTags = results.expand((r) => r.tags).toSet().toList();
-    _sendSearchedTagsToBackend(searchedTags);
-
-    setState(() {
-      filteredRecipes = results;
-      selectedTag = "";
-    });
-  }
-
-  Future<void> _sendSearchedTagsToBackend(List<String> tags) async {
-    final res = await http.post(
-      Uri.parse('http://localhost:3001/recipes/save-tags'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"tags": tags, "userId": "CURRENT_USER_ID"}),
-    );
-    if (res.statusCode != 200) {
-      debugPrint("Failed to save searched tags: ${res.body}");
+    } catch (e) {
+      setState(() => isLoading = false);
     }
   }
 
-  void _filterByTag(String tag) {
+  void _applyFilters() {
+    String query = searchController.text.toLowerCase();
     setState(() {
-      selectedTag = tag;
       filteredRecipes =
-          allRecipes
-              .where(
-                (recipe) => recipe.tags
+          allRecipes.where((recipe) {
+            final matchesQuery =
+                recipe.name.toLowerCase().contains(query) ||
+                recipe.tags.any((tag) => tag.toLowerCase().contains(query));
+            final matchesTag =
+                selectedTag.isEmpty ||
+                recipe.tags
                     .map((e) => e.toLowerCase())
-                    .contains(tag.toLowerCase()),
-              )
-              .toList();
+                    .contains(selectedTag.toLowerCase());
+            return matchesQuery && matchesTag;
+          }).toList();
     });
+  }
+
+  void _onTagSelected(String tag) {
+    selectedTag = tag;
+    _applyFilters();
   }
 
   void _clearFilter() {
     setState(() {
       selectedTag = "";
       searchController.clear();
-      filteredRecipes = allRecipes;
     });
+    _applyFilters();
   }
 
   @override
@@ -101,15 +82,15 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [IconButton(onPressed: () {}, icon: ScanFrameIcon())],
       ),
       body: Column(
         children: [
-          // --- Search Bar ---
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
-              onChanged: _filterRecipes,
+              onChanged: (_) => _applyFilters(),
               decoration: InputDecoration(
                 hintText: 'Search recipes...',
                 prefixIcon: const Icon(Icons.search),
@@ -119,6 +100,30 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
               ),
             ),
           ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add your suggested action here
+                  print("Suggested button clicked");
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFAF7036),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  "Suggested",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+
           if (selectedTag.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -137,28 +142,19 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
                 ],
               ),
             ),
-          // --- Recipes List ---
           Expanded(
-            child: FutureBuilder<List<Recipe>>(
-              future: futureRecipes,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return const Center(child: Text("Failed to load recipes"));
-                } else {
-                  return ListView.builder(
-                    itemCount: filteredRecipes.length,
-                    itemBuilder:
-                        (_, i) => RecipeTile(
-                          recipe: filteredRecipes[i],
-                          onTagSelected: _filterByTag,
-                          selectedTag: selectedTag, // <-- added
-                        ),
-                  );
-                }
-              },
-            ),
+            child:
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                      itemCount: filteredRecipes.length,
+                      itemBuilder:
+                          (_, i) => RecipeTile(
+                            recipe: filteredRecipes[i],
+                            onTagSelected: _onTagSelected,
+                            selectedTag: selectedTag,
+                          ),
+                    ),
           ),
         ],
       ),

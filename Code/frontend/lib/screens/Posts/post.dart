@@ -1,72 +1,130 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/button.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/nav.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
 class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({super.key});
+  const CreatePostScreen({Key? key}) : super(key: key);
 
   @override
   _CreatePostScreenState createState() => _CreatePostScreenState();
 }
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
-  final TextEditingController _textController = TextEditingController();
-  List<XFile> _mediaFiles = [];
-  bool _commentsEnabled = true;
-
+  static final String _baseUrl = "${ApiConfig.baseUrl}/post";
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickMedia() async {
-    final List<XFile>? pickedFiles =
-        await _picker.pickMultiImage(); // For image only
-    if (pickedFiles != null) {
+  List<File> _images = [];
+  File? _video;
+  bool _isLoading = false;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickMultiImage();
+    if (pickedFile.isNotEmpty) {
       setState(() {
-        _mediaFiles = pickedFiles;
+        _images = pickedFile.map((e) => File(e.path)).toList();
       });
     }
   }
 
-  Future<void> _submitPost() async {
-    var uri = Uri.parse("http://<YOUR_BACKEND_IP>:<PORT>/api/posts");
+  Future<void> _pickVideo() async {
+    final pickedVideo = await _picker.pickVideo(source: ImageSource.gallery);
+    if (pickedVideo != null) {
+      setState(() {
+        _video = File(pickedVideo.path);
+      });
+    }
+  }
 
-    var request = http.MultipartRequest('POST', uri);
-    request.fields['caption'] = _textController.text;
-    request.fields['commentsEnabled'] = _commentsEnabled.toString();
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
 
-    for (var file in _mediaFiles) {
-      var mimeType = lookupMimeType(file.path)?.split('/');
-      if (mimeType != null && mimeType.length == 2) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'media',
-            file.path,
-            contentType: MediaType(mimeType[0], mimeType[1]),
-          ),
-        );
-      }
+  Future<void> _createPost() async {
+    final token = await _getToken();
+    if (token == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('User not authenticated')));
+      return;
     }
 
-    // Send the request
+    setState(() => _isLoading = true);
+
+    var uri = Uri.parse('$_baseUrl/create');
+    var request =
+        http.MultipartRequest('POST', uri)
+          ..headers['Authorization'] = 'Bearer $token'
+          ..fields['title'] = _titleController.text
+          ..fields['description'] = _descController.text;
+
+    for (var img in _images) {
+      final mimeType = lookupMimeType(img.path);
+      final mediaType =
+          mimeType != null
+              ? MediaType.parse(mimeType)
+              : MediaType('image', 'jpeg');
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image',
+          img.path,
+          contentType: mediaType,
+        ),
+      );
+    }
+
+    if (_video != null) {
+      final videoMimeType = lookupMimeType(_video!.path);
+      final videoMediaType =
+          videoMimeType != null
+              ? MediaType.parse(videoMimeType)
+              : MediaType('video', 'mp4');
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'video',
+          _video!.path,
+          contentType: videoMediaType,
+        ),
+      );
+    }
+
     var response = await request.send();
-    if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print("Post uploaded successfully!");
-      }
+    final responseData = await http.Response.fromStream(response);
+
+    setState(() => _isLoading = false);
+
+    if (response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Post created successfully')),
+      );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const NavBar()),
+        (route) => false,
+      );
     } else {
       if (kDebugMode) {
-        print("Post upload failed: ${response.statusCode}");
+        print('Backend response: ${responseData.body}');
       }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed: ${response.statusCode}')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
@@ -78,56 +136,78 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           ),
         ),
         actions: [
-          Button(
-            text: "POST",
-            color: Color(0xFFAF7036),
-            txtColor: Colors.white,
-            onPressed: _submitPost,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFAF7036),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: _isLoading ? null : _createPost,
+            child: const Text(
+              "POST",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/user.jpg'),
-            ),
-            title: TextField(
-              controller: _textController,
-              decoration: InputDecoration.collapsed(
-                hintText: "What’s on your mind?",
-              ),
-            ),
-          ),
-          Wrap(
-            children:
-                _mediaFiles.map((file) {
-                  return Image.file(
-                    File(file.path),
-                    width: 300,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  );
-                }).toList(),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton.icon(
-                onPressed: _pickMedia,
-                icon: Icon(Icons.camera_alt),
-                label: Text("Photo/Video"),
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  hintText: "What's on your mind?",
+                ),
               ),
-              SwitchListTile(
-                title: Text("Comments"),
-                value: _commentsEnabled,
-                onChanged: (val) {
-                  setState(() => _commentsEnabled = val);
-                },
+              const SizedBox(height: 10),
+              TextField(
+                controller: _descController,
+                maxLines: 3,
+                decoration: const InputDecoration(hintText: "Description"),
               ),
+              const SizedBox(height: 20),
+              Wrap(
+                spacing: 8,
+                children:
+                    _images
+                        .map(
+                          (e) => Image.file(
+                            e,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                        .toList(),
+              ),
+              if (_video != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    'Video Selected: ${_video!.path.split('/').last}',
+                  ),
+                ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.image),
+                    onPressed: _pickImage,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.videocam),
+                    onPressed: _pickVideo,
+                  ),
+                ],
+              ),
+              if (_isLoading) const Center(child: CircularProgressIndicator()),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

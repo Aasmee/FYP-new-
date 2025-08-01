@@ -94,25 +94,27 @@ export async function createRecipe(req, res) {
   }
 }
 
-// Save tags of searched recipes
-export async function saveSearchedTags(req, res) {
-  try {
-    const { userId, tags } = req.body;
+// Save tags of searched recipes (one tag per history entry)
+// export async function saveSearchedTags(req, res) {
+//   try {
+//     const { userId, tagId } = req.body;
+//     const userIdInt = parseInt(userId, 10);
+//     const tagIdInt = parseInt(tagId, 10);
 
-    // Ensure tags are stored in lowercase for uniformity
-    const normalizedTags = tags.map(tag => tag.toLowerCase());
+//     if (!userIdInt || !tagIdInt) {
+//       return res.status(400).json({ error: "Invalid input" });
+//     }
 
-    // Store searched tags (you can create a UserSearchHistory table)
-    await prisma.userSearchHistory.create({
-      data: {
-        userId,
-        tags: normalizedTags,
-      },
-    });
+//     await prisma.userSearchHistory.create({
+//       data: {
+//         userId: userIdInt,
+//         tagId: tagIdInt
+//       }
+//     });
 
-    res.status(200).json({ success: true, message: "Tags saved successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to save tags" });
-  }
-}
+//     res.status(200).json({ success: true, message: "Tag saved successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Failed to save tag" });
+//   }
+// }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/Pantry/widgets/add_ingre.dart';
-import 'package:frontend/screens/Pantry/widgets/item_topic.dart';
+import 'package:frontend/services/pantry.service.dart';
 import 'package:frontend/widgets/button.dart';
 
 class Pantry extends StatefulWidget {
@@ -13,15 +13,37 @@ class Pantry extends StatefulWidget {
 }
 
 class PantryState extends State<Pantry> {
-  // Track active tab
   bool isIngredientsActive = true;
 
-  // Controllers for the popup
   final TextEditingController nameController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController unitController = TextEditingController();
   final TextEditingController expiryDateController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
+
+  List<dynamic> pantryItems = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPantry();
+  }
+
+  Future<void> fetchPantry() async {
+    try {
+      final items = await PantryService.getPantryItems();
+      setState(() {
+        pantryItems = items;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() => isLoading = false);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error loading pantry items: $e')));
+    }
+  }
 
   void _toggleActiveTab(bool isIngredients) {
     setState(() {
@@ -29,13 +51,13 @@ class PantryState extends State<Pantry> {
     });
   }
 
-  void _showPopupBox() {
-    showDialog(
+  void _showPopupBox() async {
+    final result = await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AddIngredient(
-          onClose: () => Navigator.of(context).pop(),
+          onClose: () => Navigator.of(context).pop(false),
           nameController: nameController,
           quantityController: quantityController,
           expiryDateController: expiryDateController,
@@ -44,6 +66,10 @@ class PantryState extends State<Pantry> {
         );
       },
     );
+
+    if (result == true) {
+      fetchPantry();
+    }
   }
 
   @override
@@ -105,29 +131,37 @@ class PantryState extends State<Pantry> {
                         Container(
                           padding: const EdgeInsets.all(15),
                           child: Column(
-                            children: const [
-                              Items(),
-                              Divider(),
-                              Items(),
-                              Divider(),
-                              Items(),
-                              Divider(),
-                              Items(),
-                              Divider(),
-                              Items(),
-                              Divider(),
-                              Items(),
-                            ],
+                            children:
+                                isLoading
+                                    ? [
+                                      const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ]
+                                    : pantryItems.map((item) {
+                                      return ListTile(
+                                        title: Text(item['name']),
+                                        subtitle: Text(
+                                          '${item['quantity']} ${item['unit']}',
+                                        ),
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () async {
+                                            await PantryService.deletePantryItem(
+                                              item['id'],
+                                            );
+                                            fetchPantry();
+                                          },
+                                        ),
+                                      );
+                                    }).toList(),
                           ),
                         ),
                       ],
                     )
                     : ListView(
-                      children: [
-                        //   RecipeCard(
-                        //       imagePath: 'images/Bossam.jpeg',
-                        //       label: 'Bossam',
-                        //       subtitle: 'You have all the ingredients')
+                      children: const [
+                        // Add recipe widgets here later
                       ],
                     ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/pantry.service.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:frontend/widgets/dropdownbtn.dart';
 import 'package:frontend/widgets/txtfield.dart';
@@ -125,32 +126,25 @@ class AddIngredientState extends State<AddIngredient> {
               text: 'Add',
               color: const Color(0xFFAF7036),
               txtColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
                 if (widget.nameController.text.isNotEmpty &&
-                    widget.expiryDateController.text.isNotEmpty &&
                     widget.quantityController.text.isNotEmpty &&
-                    (selectedCategory?.isNotEmpty ?? false) &&
-                    (selectedUnit?.isNotEmpty ?? false)) {
-                  widget.onClose();
+                    widget.unitController.text.isNotEmpty) {
+                  final newItem = {
+                    "name": widget.nameController.text,
+                    "quantity": widget.quantityController.text,
+                    "unit": widget.unitController.text,
+                    "category": widget.categoryController.text,
+                  };
+
+                  await PantryService.addPantryItem(newItem);
+                  Navigator.pop(context, true); // send signal to refresh
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Please fill all fields')),
                   );
                 }
               },
-            ),
-            const SizedBox(height: 10),
-            Divider(),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Button(
-                  text: 'Scan Ingredients',
-                  color: const Color(0xFFAF7036),
-                  txtColor: Colors.white,
-                  onPressed: () {},
-                ),
-              ),
             ),
           ],
         ),

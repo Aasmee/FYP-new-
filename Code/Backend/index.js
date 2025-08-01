@@ -11,6 +11,9 @@ import commentRoutes from "./routes/comment.routes.js";
 import notificationRoutes from "./routes/notifications.routes.js";
 import recipeRoutes from "./routes/recipe.routes.js";
 import listItemRoutes from "./routes/listItem.routes.js";
+import bookmarkRoutes from "./routes/bookmark.routes.js";
+import recommendRoutes from "./routes/recommendation.routes.js";
+import pantryRoutes from "./routes/pantry.routes.js";
 // import Routes if needed later
 
 dotenv.config();
@@ -45,6 +48,9 @@ app.use("/comment", commentRoutes);
 app.use("/notifications", notificationRoutes);
 app.use("/recipes", recipeRoutes);
 app.use("/list", listItemRoutes);
+app.use("/bookmark", bookmarkRoutes);
+app.use("/recommendation", recommendRoutes);
+app.use("/pantry", pantryRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

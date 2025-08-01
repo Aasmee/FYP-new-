@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/authServices.dart';
+import 'package:frontend/widgets/button.dart';
+import 'package:frontend/widgets/txtfield.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,61 +39,84 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    filled: true,
-                    fillColor: Colors.white70,
-                  ),
-                ),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    filled: true,
-                    fillColor: Colors.white70,
-                  ),
-                  obscureText: true,
-                ),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: rememberMe,
-                      onChanged: (val) => setState(() => rememberMe = val!),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text("Remember me", style: TextStyle(color: Colors.white)),
-                    Spacer(),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Forgot password?",
-                        style: TextStyle(color: Colors.red),
+                  ),
+                  const Text(
+                    "Welcome back!",
+                    style: TextStyle(color: Colors.white, fontSize: 16.5),
+                  ),
+                  SizedBox(height: 16),
+                  Textfield(
+                    controller: emailController,
+                    hintText: "Email",
+                    label: "Email",
+                    labelColor: Colors.white,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 9),
+                  Textfield(
+                    controller: passwordController,
+                    hintText: "Password",
+                    label: "Password",
+                    labelColor: Colors.white,
+                    isPassword: true,
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: rememberMe,
+                        onChanged: (val) => setState(() => rememberMe = val!),
                       ),
-                    ),
-                  ],
-                ),
-                ElevatedButton(onPressed: login, child: Text("Login")),
-                TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/register'),
-                  child: Text(
-                    "Don’t have an account? Register here",
-                    style: TextStyle(color: Colors.red),
+                      Text(
+                        "Remember me",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Forgot password?",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  Button(
+                    text: "Login",
+                    color: Colors.white,
+                    txtColor: Colors.black,
+                    onPressed: login,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Don't have an account?",
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                      TextButton(
+                        onPressed:
+                            () => Navigator.pushNamed(context, '/register'),
+                        child: const Text(
+                          "Register",
+                          style: TextStyle(color: Colors.red, fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
