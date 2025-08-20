@@ -5,6 +5,6 @@ import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/recommendations", authenticate, getBasicTagRecommendations);
+router.get("/tags", authenticate, getBasicTagRecommendations);
 
 export default router;

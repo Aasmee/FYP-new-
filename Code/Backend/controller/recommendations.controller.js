@@ -1,22 +1,27 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-// controllers/recommendations.controller.js
 export const getBasicTagRecommendations = async (req, res) => {
   try {
-    const userId = req.user.id; // ✅ Extracted from token
+    // Handle different token payload formats (id or userId)
+    const userId = req.user?.id || req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ message: "User ID missing in token" });
+    }
 
+    // Fetch user search history
     const tagSearches = await prisma.userSearchHistory.findMany({
       where: { userId },
       select: { tagId: true },
     });
 
-    const searchedTagIds = tagSearches.map(entry => entry.tagId);
+    const searchedTagIds = tagSearches.map((entry) => entry.tagId);
 
     if (searchedTagIds.length === 0) {
-      return res.status(200).json([]);
+      return res.status(200).json([]); // No history, return empty
     }
 
+    // Find recipes matching searched tags
     const recipes = await prisma.recipe.findMany({
       where: {
         tags: {
@@ -25,19 +30,21 @@ export const getBasicTagRecommendations = async (req, res) => {
           },
         },
       },
-      include: {
-        tags: true,
-      },
+      include: { tags: true },
     });
 
-    const scoredRecipes = recipes.map(recipe => {
-      const matchedTags = recipe.tags.filter(rt => searchedTagIds.includes(rt.tagId));
+    // Score recipes based on matching tags
+    const scoredRecipes = recipes.map((recipe) => {
+      const matchedTags = recipe.tags.filter((rt) =>
+        searchedTagIds.includes(rt.tagId)
+      );
       return {
         ...recipe,
         matchScore: matchedTags.length,
       };
     });
 
+    // Sort and limit results
     scoredRecipes.sort((a, b) => b.matchScore - a.matchScore);
     const topRecipes = scoredRecipes.slice(0, 10);
 
